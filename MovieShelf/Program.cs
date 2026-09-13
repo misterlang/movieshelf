@@ -1,10 +1,11 @@
-﻿using MovieShelf.Services;
-using MovieShelf.Models;
+﻿using MovieShelf.Models;
+using MovieShelf.Services;
+
 MovieService movieService = new MovieService();
 
 List<Movie> movies = movieService.GetMovies();
 
-foreach (var movie in movies)
+foreach (var m in movies)
 {
-    Console.WriteLine($"{movie.Title} ({movie.Year})");
+    Console.WriteLine($"{m.Title} ({m.Year})");
 }

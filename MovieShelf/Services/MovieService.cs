@@ -13,4 +13,15 @@ public class MovieService
 
         return JsonSerializer.Deserialize<List<Movie>>(json) ?? [];
     }
+
+    public void AddMovie(Movie movie)
+    {
+        List<Movie> movies = GetMovies();
+
+        movies.Add(movie);
+
+        string json = JsonSerializer.Serialize(movies);
+
+        File.WriteAllText(FilePath, json);
+    }
 }
