@@ -1,11 +1,15 @@
-﻿using MovieShelf.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using ModelContextProtocol.Server;
 using MovieShelf.Services;
 
-MovieService movieService = new MovieService();
+var builder = Host.CreateApplicationBuilder(args);
 
-List<Movie> horrorMovies = movieService.FindMoviesByGenre("Horror");
+builder.Services.AddSingleton<MovieService>();
 
-foreach (Movie movie in horrorMovies)
-{
-    Console.WriteLine($"{movie.Title} ({movie.Year})");
-}
+builder.Services
+    .AddMcpServer()
+    .WithStdioServerTransport()
+    .WithToolsFromAssembly();
+
+await builder.Build().RunAsync();
