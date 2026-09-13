@@ -3,9 +3,9 @@ using MovieShelf.Services;
 
 MovieService movieService = new MovieService();
 
-List<Movie> movies = movieService.GetMovies();
+List<Movie> horrorMovies = movieService.FindMoviesByGenre("Horror");
 
-foreach (var m in movies)
+foreach (Movie movie in horrorMovies)
 {
-    Console.WriteLine($"{m.Title} ({m.Year})");
+    Console.WriteLine($"{movie.Title} ({movie.Year})");
 }

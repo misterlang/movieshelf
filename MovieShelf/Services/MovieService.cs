@@ -24,4 +24,13 @@ public class MovieService
 
         File.WriteAllText(FilePath, json);
     }
+
+    public List<Movie> FindMoviesByGenre(string genre)
+    {
+        List<Movie> movies = GetMovies();
+
+        return movies
+            .Where(movie => movie.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
 }
