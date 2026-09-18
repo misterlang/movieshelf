@@ -33,4 +33,14 @@ public class MovieService
             .Where(movie => movie.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase))
             .ToList();
     }
+
+    public Movie? GetMovieByTitle(string title)
+    {
+        return GetMovies()
+            .FirstOrDefault(movie =>
+                string.Equals(
+                    movie.Title,
+                    title,
+                    StringComparison.OrdinalIgnoreCase));
+    }
 }

@@ -41,4 +41,13 @@ public class MovieTools
             throw;
         }
     }
+
+    [McpServerTool]
+    [Description("Finds a movie in the collection by its title.")]
+    public Movie? GetMovieByTitle(
+    [Description("The exact title of the movie to search for.")]
+    string title)
+    {
+        return _movieService.GetMovieByTitle(title);
+    }
 }
