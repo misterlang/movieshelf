@@ -16,11 +16,29 @@ public class MovieTools
     }
 
     [McpServerTool]
-    [Description("Findet Filme aus der Sammlung anhand ihres Genres."), DisplayName("Find Movies By Genre"), Category("Movie Tools"),]
+    [Description("Findet Filme aus der Sammlung anhand ihres Genres."), DisplayName("Find Movies By Genre"), Category("Movie Tools")]
     public List<Movie> FindMoviesByGenre(
-        [Description("Das gesuchte Filmgenre.")]
-        string genre)
+    [Description("Das gesuchte Filmgenre.")]
+    string genre)
     {
-        return _movieService.FindMoviesByGenre(genre);
+        Console.Error.WriteLine(
+            $"[MovieShelf] FindMoviesByGenre gestartet. Genre: '{genre}'");
+
+        try
+        {
+            var movies = _movieService.FindMoviesByGenre(genre);
+
+            Console.Error.WriteLine(
+                $"[MovieShelf] FindMoviesByGenre erfolgreich. Anzahl Ergebnisse: {movies.Count}");
+
+            return movies;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(
+                $"[MovieShelf] FEHLER: {ex}");
+
+            throw;
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace MovieShelf.Services;
 
 public class MovieService
 {
-    private const string FilePath = "Data/movies.json";
+    private const string FilePath = "MovieShelf/Data/movies.json";
 
     public List<Movie> GetMovies()
     {
