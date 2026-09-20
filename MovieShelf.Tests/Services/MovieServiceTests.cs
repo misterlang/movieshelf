@@ -32,4 +32,86 @@ public class MovieServiceTests
 
         Assert.Null(movie);
     }
+
+    [Fact]
+    public void SearchMovies_WithGenre_ReturnsCaseInsensitiveMatches()
+    {
+        var movies = _movieService.SearchMovies(genre: "sci-fi");
+
+        Assert.Equal(
+            new[] { "Inception", "Interstellar" }.Order(),
+            movies.Select(movie => movie.Title).Order());
+    }
+
+    [Fact]
+    public void SearchMovies_WithWhitespaceGenre_DoesNotApplyGenreFilter()
+    {
+        var movies = _movieService.SearchMovies(genre: " ", minimumYear: 2014);
+
+        Assert.Equal(
+            new[] { "Interstellar", "Parasite", "Grand Budapest Hotel" }.Order(),
+            movies.Select(movie => movie.Title).Order());
+    }
+
+    [Fact]
+    public void SearchMovies_WithMinimumYear_ReturnsMatchingMovies()
+    {
+        var movies = _movieService.SearchMovies(minimumYear: 2014);
+
+        Assert.Equal(
+            new[] { "Interstellar", "Parasite", "Grand Budapest Hotel" }.Order(),
+            movies.Select(movie => movie.Title).Order());
+    }
+
+    [Fact]
+    public void SearchMovies_WithMinimumRating_ReturnsMatchingMovies()
+    {
+        var movies = _movieService.SearchMovies(minimumRating: 9);
+
+        Assert.All(movies, movie => Assert.True(movie.Rating >= 9));
+        Assert.Equal(7, movies.Count);
+    }
+
+    [Fact]
+    public void SearchMovies_WithMultipleFilters_ReturnsMoviesMatchingAllFilters()
+    {
+        var movies = _movieService.SearchMovies("Sci-Fi", minimumYear: 2012, minimumRating: 9);
+
+        var movie = Assert.Single(movies);
+        Assert.Equal("Interstellar", movie.Title);
+    }
+
+    [Fact]
+    public void SearchMovies_WithoutFilters_ReturnsAllMovies()
+    {
+        var movies = _movieService.SearchMovies();
+
+        Assert.Equal(_movieService.GetMovies().Count, movies.Count);
+    }
+
+    [Fact]
+    public void SearchMovies_WithMinimumYearBelowRange_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _movieService.SearchMovies(minimumYear: 0));
+    }
+
+    [Fact]
+    public void SearchMovies_WithMinimumYearAboveCurrentYear_ThrowsArgumentOutOfRangeException()
+    {
+        int futureYear = DateTime.UtcNow.Year + 1;
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => _movieService.SearchMovies(minimumYear: futureYear));
+    }
+
+    [Fact]
+    public void SearchMovies_WithMinimumRatingBelowRange_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _movieService.SearchMovies(minimumRating: -1));
+    }
+
+    [Fact]
+    public void SearchMovies_WithMinimumRatingAboveRange_ThrowsArgumentOutOfRangeException()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _movieService.SearchMovies(minimumRating: 11));
+    }
 }
