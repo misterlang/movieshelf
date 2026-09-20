@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Hosting;
+using MovieShelf.Models;
 using MovieShelf.Services;
 using Xunit;
 
@@ -5,7 +7,31 @@ namespace MovieShelf.Tests.Services;
 
 public class MovieServiceTests
 {
-    private readonly MovieService _movieService = new();
+    private readonly MovieService _movieService = CreateMovieService(AppContext.BaseDirectory);
+
+    [Fact]
+    public void GetMovies_UsesContentRootPath()
+    {
+        string contentRootPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        string dataDirectoryPath = Path.Combine(contentRootPath, "Data");
+        Directory.CreateDirectory(dataDirectoryPath);
+        File.WriteAllText(
+            Path.Combine(dataDirectoryPath, "movies.json"),
+            "[{\"Id\":\"00000000-0000-0000-0000-000000000001\",\"Title\":\"Content Root Movie\",\"Year\":2000,\"Genre\":\"Test\",\"Rating\":1}]");
+
+        try
+        {
+            var movieService = CreateMovieService(contentRootPath);
+
+            var movie = Assert.Single(movieService.GetMovies());
+
+            Assert.Equal("Content Root Movie", movie.Title);
+        }
+        finally
+        {
+            Directory.Delete(contentRootPath, recursive: true);
+        }
+    }
 
     [Fact]
     public void GetMovieByTitle_WithExactTitle_ReturnsMovie()
@@ -31,6 +57,39 @@ public class MovieServiceTests
         var movie = _movieService.GetMovieByTitle("Dieser Film Existiert Nicht");
 
         Assert.Null(movie);
+    }
+
+    [Fact]
+    public void FindMoviesByGenre_ReturnsMatchingMovies()
+    {
+        var movies = _movieService.FindMoviesByGenre("Horror");
+
+        var movie = Assert.Single(movies);
+        Assert.Equal("Alien", movie.Title);
+    }
+
+    [Fact]
+    public void AddMovie_WritesToContentRootDataFile()
+    {
+        string contentRootPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        string dataDirectoryPath = Path.Combine(contentRootPath, "Data");
+        Directory.CreateDirectory(dataDirectoryPath);
+        File.WriteAllText(Path.Combine(dataDirectoryPath, "movies.json"), "[]");
+
+        try
+        {
+            var movieService = CreateMovieService(contentRootPath);
+            var movie = new Movie { Title = "Added Movie", Year = 2000, Genre = "Test", Rating = 1 };
+
+            movieService.AddMovie(movie);
+
+            var addedMovie = Assert.Single(movieService.GetMovies());
+            Assert.Equal(movie.Title, addedMovie.Title);
+        }
+        finally
+        {
+            Directory.Delete(contentRootPath, recursive: true);
+        }
     }
 
     [Fact]
@@ -130,5 +189,15 @@ public class MovieServiceTests
     public void SearchMovies_WithMinimumRatingAboveRange_ThrowsArgumentOutOfRangeException()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => _movieService.SearchMovies(minimumRating: 11));
+    }
+
+    private static MovieService CreateMovieService(string contentRootPath)
+    {
+        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+        {
+            ContentRootPath = contentRootPath
+        });
+
+        return new MovieService(builder.Environment);
     }
 }

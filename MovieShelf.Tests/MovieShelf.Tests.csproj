@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MovieShelf\MovieShelf.csproj" />
-    <Content Include="..\MovieShelf\Data\movies.json" Link="MovieShelf\Data\movies.json">
+    <Content Include="..\MovieShelf\Data\movies.json" Link="Data\movies.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

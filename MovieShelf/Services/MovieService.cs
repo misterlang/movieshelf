@@ -1,15 +1,21 @@
 using System.Text.Json;
+using Microsoft.Extensions.Hosting;
 using MovieShelf.Models;
 
 namespace MovieShelf.Services;
 
 public class MovieService
 {
-    private const string FilePath = "MovieShelf/Data/movies.json";
+    private readonly string _filePath;
+
+    public MovieService(IHostEnvironment hostEnvironment)
+    {
+        _filePath = Path.Combine(hostEnvironment.ContentRootPath, "Data", "movies.json");
+    }
 
     public List<Movie> GetMovies()
     {
-        string json = File.ReadAllText(FilePath);
+        string json = File.ReadAllText(_filePath);
 
         return JsonSerializer.Deserialize<List<Movie>>(json) ?? [];
     }
@@ -22,7 +28,7 @@ public class MovieService
 
         string json = JsonSerializer.Serialize(movies);
 
-        File.WriteAllText(FilePath, json);
+        File.WriteAllText(_filePath, json);
     }
 
     public List<Movie> FindMoviesByGenre(string genre)
