@@ -68,8 +68,18 @@ public class MovieServiceTests
     {
         var movies = _movieService.SearchMovies(minimumRating: 9);
 
-        Assert.All(movies, movie => Assert.True(movie.Rating >= 9));
-        Assert.Equal(7, movies.Count);
+        Assert.Equal(
+            new[]
+            {
+                "Der Pate",
+                "Pulp Fiction",
+                "Spirited Away - Chihiros Reise ins Zauberland",
+                "Interstellar",
+                "Parasite",
+                "Das Leben der Anderen",
+                "Grand Budapest Hotel"
+            }.Order(),
+            movies.Select(movie => movie.Title).Order());
     }
 
     [Fact]
@@ -85,8 +95,15 @@ public class MovieServiceTests
     public void SearchMovies_WithoutFilters_ReturnsAllMovies()
     {
         var movies = _movieService.SearchMovies();
+        var expectedMovies = _movieService.GetMovies();
 
-        Assert.Equal(_movieService.GetMovies().Count, movies.Count);
+        Assert.Equal(
+            expectedMovies
+                .OrderBy(movie => movie.Id)
+                .Select(movie => new { movie.Id, movie.Title, movie.Year, movie.Genre, movie.Rating }),
+            movies
+                .OrderBy(movie => movie.Id)
+                .Select(movie => new { movie.Id, movie.Title, movie.Year, movie.Genre, movie.Rating }));
     }
 
     [Fact]
