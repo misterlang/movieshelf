@@ -16,6 +16,30 @@ public class MovieTools
     }
 
     [McpServerTool]
+    [Description("Gets the complete movie collection.")]
+    public IReadOnlyList<Movie> GetAllMovies()
+    {
+        Console.Error.WriteLine("[MovieShelf] GetAllMovies gestartet.");
+
+        try
+        {
+            var movies = _movieService.GetMovies().AsReadOnly();
+
+            Console.Error.WriteLine(
+                $"[MovieShelf] GetAllMovies erfolgreich. Anzahl Ergebnisse: {movies.Count}");
+
+            return movies;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine(
+                $"[MovieShelf] FEHLER: {ex}");
+
+            throw;
+        }
+    }
+
+    [McpServerTool]
     [Description("Findet Filme aus der Sammlung anhand ihres Genres."), DisplayName("Find Movies By Genre"), Category("Movie Tools")]
     public List<Movie> FindMoviesByGenre(
     [Description("Das gesuchte Filmgenre.")]
