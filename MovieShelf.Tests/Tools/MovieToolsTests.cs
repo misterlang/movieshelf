@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Hosting;
 using MovieShelf.Models;
 using MovieShelf.Services;
 using MovieShelf.Tools;
@@ -7,7 +8,7 @@ namespace MovieShelf.Tests.Tools;
 
 public class MovieToolsTests
 {
-    private readonly MovieService _movieService = new();
+    private readonly MovieService _movieService = CreateMovieService();
 
     [Fact]
     public void GetAllMovies_ReturnsCompleteMovieCollection()
@@ -36,5 +37,15 @@ public class MovieToolsTests
         var mutableMovies = Assert.IsAssignableFrom<IList<Movie>>(movies);
 
         Assert.Throws<NotSupportedException>(() => mutableMovies.Clear());
+    }
+
+    private static MovieService CreateMovieService()
+    {
+        var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+        {
+            ContentRootPath = AppContext.BaseDirectory
+        });
+
+        return new MovieService(builder.Environment);
     }
 }
