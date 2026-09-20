@@ -1,1 +1,65 @@
-[{"Id":"b7e3d8a1-4c92-4f6b-9e15-2a7d8c3f1b60","Title":"Inception","Year":2010,"Genre":"Sci-Fi","Rating":8},{"Id":"1f6a9c42-8d37-4b05-ae91-63c2f7d8b4e0","Title":"Der Pate","Year":1972,"Genre":"Krimi","Rating":9},{"Id":"d4b8e2f7-19a6-43c0-8b5d-7e1f9a2c6d30","Title":"Pulp Fiction","Year":1994,"Genre":"Krimi","Rating":9},{"Id":"6c1e7b93-a5d2-4f08-bc64-9d3a2e7f1b50","Title":"Spirited Away - Chihiros Reise ins Zauberland","Year":2001,"Genre":"Animation","Rating":9},{"Id":"a92f4c16-7e3b-48d5-91a0-c6f2b8e7d430","Title":"Interstellar","Year":2014,"Genre":"Sci-Fi","Rating":9},{"Id":"3e8b1d75-c4a9-46f2-b607-2d9e5c1a8f30","Title":"Parasite","Year":2019,"Genre":"Drama","Rating":9},{"Id":"f5a2c8e4-0b71-4d96-83cf-1e7a9b2d6c50","Title":"Das Leben der Anderen","Year":2006,"Genre":"Drama","Rating":9},{"Id":"8d3f6b20-e9a4-42c7-b15e-6f1a8c2d7b90","Title":"Grand Budapest Hotel","Year":2014,"Genre":"Kom\u00F6die","Rating":9},{"Id":"cc4253f6-aa01-45a7-b285-2f506a1b25ce","Title":"Alien","Year":1979,"Genre":"Horror","Rating":5}]
+[
+    {
+        "Id": "b7e3d8a1-4c92-4f6b-9e15-2a7d8c3f1b60",
+        "Title": "Inception",
+        "Year": 2010,
+        "Genre": "Sci-Fi",
+        "Rating": 8
+    },
+    {
+        "Id": "1f6a9c42-8d37-4b05-ae91-63c2f7d8b4e0",
+        "Title": "Der Pate",
+        "Year": 1972,
+        "Genre": "Krimi",
+        "Rating": 9
+    },
+    {
+        "Id": "d4b8e2f7-19a6-43c0-8b5d-7e1f9a2c6d30",
+        "Title": "Pulp Fiction",
+        "Year": 1994,
+        "Genre": "Krimi",
+        "Rating": 9
+    },
+    {
+        "Id": "6c1e7b93-a5d2-4f08-bc64-9d3a2e7f1b50",
+        "Title": "Spirited Away - Chihiros Reise ins Zauberland",
+        "Year": 2001,
+        "Genre": "Animation",
+        "Rating": 9
+    },
+    {
+        "Id": "a92f4c16-7e3b-48d5-91a0-c6f2b8e7d430",
+        "Title": "Interstellar",
+        "Year": 2014,
+        "Genre": "Sci-Fi",
+        "Rating": 9
+    },
+    {
+        "Id": "3e8b1d75-c4a9-46f2-b607-2d9e5c1a8f30",
+        "Title": "Parasite",
+        "Year": 2019,
+        "Genre": "Drama",
+        "Rating": 9
+    },
+    {
+        "Id": "f5a2c8e4-0b71-4d96-83cf-1e7a9b2d6c50",
+        "Title": "Das Leben der Anderen",
+        "Year": 2006,
+        "Genre": "Drama",
+        "Rating": 9
+    },
+    {
+        "Id": "8d3f6b20-e9a4-42c7-b15e-6f1a8c2d7b90",
+        "Title": "Grand Budapest Hotel",
+        "Year": 2014,
+        "Genre": "Kom\u00F6die",
+        "Rating": 9
+    },
+    {
+        "Id": "cc4253f6-aa01-45a7-b285-2f506a1b25ce",
+        "Title": "Alien",
+        "Year": 1979,
+        "Genre": "Horror",
+        "Rating": 5
+    }
+]
